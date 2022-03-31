@@ -1,0 +1,203 @@
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: gray #c5c5c5;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #c5c5c5;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 20px;
+  border: 3px solid gray;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+:root {
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  box-sizing: border-box;
+  background-color: #e2e2e2;
+  position: relative;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.rounded-50 {
+  border-radius: 50%;
+}
+
+.rounded-20px {
+  border-radius: 20px;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.flex-center {
+  align-items: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.btn {
+  outline: none;
+  border: unset;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 5px 10px;
+}
+
+
+input {
+  outline: none;
+}
+
+.container {
+  margin: 0 auto;
+  width: 90vw;
+}
+
+.icon {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.icon-md {
+  background-size: 25px;
+  height: 25px;
+  width: 25px;
+}
+
+.icon-sm {
+  background-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.rounded-50 {
+  border-radius: 50%;
+}
+
+.navbar {
+  background-color: #2f2f2f;
+  padding: 20px 0;
+}
+
+.navbar .container {
+  justify-content: space-between;
+}
+.nav-group a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding: 5px;
+  margin: 0 5px;
+}
+
+.nav-group a:hover {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.login-section {
+  margin-top: 20px;
+}
+
+
+.login-section .container {
+  margin: 0 auto;
+  width: 450px;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 2px 15px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.login-section .container h1 {
+  color: #6e6e6e;
+}
+
+.login-section .container .form {
+  padding: 30px;
+  width: 400px;
+  flex-direction: column;
+  justify-items: center;
+}
+.form-control {
+  margin-bottom: 30px;
+}
+
+.form-control span {
+  display: block;
+  margin-bottom: 10px;
+  color: #6e6e6e;
+}
+.form-control input {
+  outline: none;
+  width: 100%;
+  border: 1px solid #6e6e6e;
+  padding: 5px 10px;
+  border-radius: 3px;
+  color: #2f2f2f;
+}
+
+
+.btn-submit {
+  color: #fff;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #4e4e4e;
+  border-radius: 3px;
+  align-self: center;
+}
+
+.btn-submit:hover {
+  background-color: #6e6e6e;
+}
