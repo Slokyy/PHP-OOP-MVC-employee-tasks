@@ -45,7 +45,7 @@
           return true;
         } else {
 //          header("Location: ../index.php");
-          return "Los pokusaj";
+          return false;
         }
 
       } catch (\PDOException $e) {

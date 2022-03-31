@@ -3,8 +3,10 @@
   session_start();
 
 //  include_once("../includes/controller.php");
-  require_once("../classes/Database/Database.php");
-  require_once("../classes/Models/User.php");
+  require_once("../autoloader.php");
+/*
+  include_once("../classes/Database/Database.php");
+  include_once("../classes/Models/User.php");*/
   use Database\Database;
   use Models\User;
 

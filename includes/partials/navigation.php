@@ -1,6 +1,6 @@
 <?php
-  require_once("../classes/Database/Database.php");
-  require_once("../classes/Models/User.php");
+//  require_once("../classes/Database/Database.php");
+//  require_once("../classes/Models/User.php");
 ?>
 <nav class="navbar">
   <div class="container flex">

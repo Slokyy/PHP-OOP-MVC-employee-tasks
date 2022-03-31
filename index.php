@@ -41,6 +41,6 @@
   </section>
 
   <?php
-
+    echo __DIR__;
     require_once("./includes/partials/footer.php");
   ?>
