@@ -12,10 +12,11 @@
 
 
   include_once("../includes/partials/header.php");
+  $user = new User();
+
   include_once("../includes/partials/navigation.php");
 
 //  echo $require_test;
-  $user = new User();
   ?>
   <div class="container">
     <?php
