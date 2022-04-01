@@ -12,4 +12,10 @@
     {
       return $this->getLoggedUserEmail($user_id);
     }
+
+    public function getAllUsers() {
+      return $this->getAllUsersData();
+    }
+
+
   }

@@ -10,16 +10,9 @@
 
   class User
   {
-    public function getAllUsers(): array
-    {
-      $sql = "SELECT * FROM employees";
-      $db = Database::connect();
-      $statement = $db->prepare($sql);
 
-      $statement->execute();
-      $results = $statement->fetchAll();
-      return $results;
-    }
+
+    protected array $errorData = [];
 
     public function login($email, $password) {
       $password = md5($password);
@@ -39,12 +32,12 @@
           $user_id = $result['employee_id'];
           $user_role = $result['position_name'];
           $this->createSession($user_id, $user_role);
-
           header("Location: ../dashboard/dashboard.php");
 //          $test = $user_role;
           return true;
         } else {
-//          header("Location: ../index.php");
+          $this->setLoginErrorData("emailPasswordErr", 'Email/Password error!');
+          header("Location: ../index.php");
           return false;
         }
 
@@ -60,7 +53,7 @@
       $_SESSION['role'] = $user_role;
     }
 
-    public function getLoggedUserEmail($user_id): string
+    protected function getLoggedUserEmail($user_id): string
     {
       try {
         $sql = "SELECT e.email as email FROM employees e
@@ -82,5 +75,68 @@
       }
     }
 
+    protected function getAllUsersData(): array
+    {
+      $sql = "SELECT * FROM employees";
+      $db = Database::connect();
+      $statement = $db->prepare($sql);
+
+      $statement->execute();
+      $results = $statement->fetchAll();
+      return $results;
+    }
+
+    /**
+     * Validates email and checks if it exists in the database
+     * @param $email
+     * @return bool
+     */
+    public function checkEmailExists($email): bool
+    {
+      if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $this->setLoginErrorData("invalidEmail", "Invalid email");
+        return false;
+      }
+      $sql = "SELECT email FROM employees WHERE email= :email";
+      $statement = Database::connect()->prepare($sql);
+      $statement->bindParam(":email", $email, \PDO::PARAM_STR);
+
+      $statement->execute();
+
+      if($statement->rowCount() > 0) {
+        return true;
+      } else {
+        $this->setLoginErrorData("emailNotFoundError", "Searched email is not found");
+        return false;
+      }
+    }
+
+    public function checkValidPassword($email, $password): bool
+    {
+      $password = md5($password);
+      $sql = "SELECT email FROM employees WHERE email= :email AND password=:password";
+      $statement = Database::connect()->prepare($sql);
+      $statement->bindParam(":email", $email, \PDO::PARAM_STR);
+      $statement->bindParam(":password", $password, \PDO::PARAM_STR);
+
+      $statement->execute();
+
+      if($statement->rowCount() > 0) {
+        return true;
+      } else {
+        $this->setLoginErrorData("passwordError", "Wrong Password!");
+        return false;
+      }
+    }
+
+    public function setLoginErrorData(string $targetKey,string $targetValue)
+    {
+      $this->errorData[$targetKey] = $targetValue;
+    }
+
+    public function getErrorData(): array
+    {
+      return $this->errorData;
+    }
 
   }

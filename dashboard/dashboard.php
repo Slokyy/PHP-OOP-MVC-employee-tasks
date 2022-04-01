@@ -1,7 +1,7 @@
 <?php
 
   session_start();
-  require_once("../autoloader.php");
+//  require_once("../autoloader.php");
 
   if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
     $title = "Naslovna";
