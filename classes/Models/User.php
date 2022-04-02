@@ -3,18 +3,26 @@
   namespace Models;
 
   use Database\Database;
-  if(!isset($_SESSION))
-  {
-    session_start();
-  }
+
 
   class User
   {
 
 
     protected array $errorData = [];
+    protected array $loginData = [];
+    public array $userData = [];
 
-    public function login($email, $password) {
+    /**
+     * login function sets array property of login data,
+     * and returns bool value if it finds user
+     * @TODO Convert login function to boolean
+     * @param $email
+     * @param $password
+     * @return bool
+     */
+    public function login($email, $password): bool
+    {
       $password = md5($password);
       try {
         $db = Database::connect();
@@ -31,13 +39,12 @@
           $result = $statement->fetch();
           $user_id = $result['employee_id'];
           $user_role = $result['position_name'];
-          $this->createSession($user_id, $user_role);
-          header("Location: ../dashboard/dashboard.php");
-//          $test = $user_role;
+          $this->loginData = [
+            "user_id" => $user_id,
+            "user_role" =>$user_role
+          ];
           return true;
         } else {
-          $this->setLoginErrorData("emailPasswordErr", 'Email/Password error!');
-          header("Location: ../index.php");
           return false;
         }
 
@@ -46,12 +53,17 @@
       }
     }
 
-
-    public function createSession($user_id, $user_role)
+    /**
+     * Get login data
+     * @return array
+     */
+    public function getLoginData(): array
     {
-      $_SESSION['user_id'] = $user_id;
-      $_SESSION['role'] = $user_role;
+      return $this->loginData;
     }
+
+
+
 
     protected function getLoggedUserEmail($user_id): string
     {
@@ -75,9 +87,34 @@
       }
     }
 
+    protected function getSingleUserByIdData($user_id): array
+    {
+      try {
+        $sql = "SELECT p.position_name as position_name, e.id as employee_id, e.firstname as firstname, e.lastname as lastname, e.salary as salary, e.email as email
+                FROM employees e
+                LEFT JOIN position p on e.position_id = p.id
+                WHERE e.id=:user_id";
+        $statement = Database::connect()->prepare($sql);
+        $statement->bindParam(":user_id", $user_id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        if($statement->rowCount() > 0) {
+          $results = $statement->fetchAll();
+          return $results[0];
+        } else {
+          return ["Triggered Karen at the getSingleUserById class"];
+        }
+
+      } catch (\PDOException $e) {
+        return ["Error" => "$user_id error!: ". $e->getMessage()];
+      }
+    }
+
     protected function getAllUsersData(): array
     {
-      $sql = "SELECT * FROM employees";
+      $sql = "SELECT p.position_name as position_name, e.id as employee_id, e.firstname as firstname, e.lastname as lastname, e.salary as salary, e.email as email
+            FROM employees e
+         LEFT JOIN position p on e.position_id = p.id ORDER BY salary DESC";
       $db = Database::connect();
       $statement = $db->prepare($sql);
 
@@ -85,6 +122,26 @@
       $results = $statement->fetchAll();
       return $results;
     }
+
+    protected function getUsersByPositionNameData(string $filterPosition): array
+    {
+      $sql = "SELECT p.position_name as position_name, e.id as employee_id, e.firstname as firstname, e.lastname as lastname, e.salary as salary, e.email as email
+            FROM employees e
+         LEFT JOIN position p on e.position_id = p.id
+        WHERE position_name=:filterPosition ORDER BY salary DESC;";
+      $statement = Database::connect()->prepare($sql);
+      $statement->bindParam(":filterPosition", $filterPosition);
+      $statement->execute();
+      if($statement->rowCount() > 0) {
+        $results = $statement->fetchAll();
+        return $results;
+      } else {
+        $results = ["There are no users $filterPosition"];
+        return $results;
+      }
+    }
+
+
 
     /**
      * Validates email and checks if it exists in the database

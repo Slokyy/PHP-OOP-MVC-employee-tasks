@@ -13,8 +13,17 @@
       return $this->getLoggedUserEmail($user_id);
     }
 
-    public function getAllUsers() {
-      return $this->getAllUsersData();
+    public function getUsersByFilteredData($filter): array {
+      if($filter === "all") {
+        return $this->getAllUsersData();
+      } else {
+        return $this->getUsersByPositionNameData($filter);
+      }
+    }
+
+    public function getSingleUserById($user_id): array
+    {
+      return $this->getSingleUserByIdData($user_id);
     }
 
 
