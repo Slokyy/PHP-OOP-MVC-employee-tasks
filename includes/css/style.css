@@ -80,6 +80,10 @@ h2 {
   flex-direction: row;
 }
 
+.justify-cont-between {
+  justify-content: space-between;
+}
+
 .btn {
   outline: none;
   border: unset;
@@ -196,8 +200,73 @@ input {
   background-color: #4e4e4e;
   border-radius: 3px;
   align-self: center;
+  margin-bottom: 5px;
 }
 
-.btn-submit:hover {
-  background-color: #6e6e6e;
+.btn-edit {
+  color: #fff;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #2e2ecd;
+  border-radius: 3px;
+  margin: 5px;
+
+}
+
+.btn-delete {
+  color: #fff;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #bb0000;
+  border-radius: 3px;
+  margin: 5px;
+}
+
+.btn:hover {
+  opacity: 0.6;
+}
+
+.form-filter > * {
+  margin: 5px;
+}
+
+
+.employees-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.employees-table td, .employees-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.employees-table tr:nth-child(even){background-color: #f2f2f2;}
+
+.employees-table tr:hover {background-color: #ddd;}
+
+.employees-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4e4e4e;
+  color: white;
+}
+
+.navlog-info {
+  color: #fff;
+}
+
+.employees-header {
+  width: 100%;
+}
+
+.employees-header .add-employee {
+  margin-right: 10px;
+}
+
+span.input-error {
+  color: red;
 }

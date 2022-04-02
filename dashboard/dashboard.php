@@ -4,13 +4,18 @@
 //  require_once("../autoloader.php");
 
   if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
-    $title = "Naslovna";
+    $title = "Dashboard";
     include_once("../includes/partials/header.php");
     include_once("../includes/partials/navigation.php");
 
-    echo $_SESSION['user_id'];
-    echo __DIR__;
+    ?>
+    <div class="container flex flex-center flex-column ">
 
+
+
+
+    </div>
+    <?php
 
     include_once("../includes/partials/footer.php");
   } else {

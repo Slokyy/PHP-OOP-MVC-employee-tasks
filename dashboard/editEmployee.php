@@ -1,6 +1,8 @@
 <?php
 
-  session_start();
+  if(!isset($_SESSION)) {
+    session_start();
+  }
 
 //  include_once("../includes/controller.php");
 //  require_once("../autoloader.php");
@@ -10,9 +12,9 @@
 
 
 
-  if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator" && isset($_POST['targetEmpoyeeId'])) {
+  if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator" && isset($_POST['targetEmployeeId'])) {
     $title = "Edit";
-    $targetEmployeeId = $_POST['targetEmpoyeeId'];
+    $targetEmployeeId = $_POST['targetEmployeeId'];
 
     include_once("../includes/partials/header.php");
     include_once("../includes/partials/navigation.php");
@@ -21,12 +23,15 @@
     $userController = new \Controllers\UserController();
     $singleEditUser = $userController->getSingleUserById($targetEmployeeId);
     $positionsArr = $positionsController->getAllPositions();
+//    var_dump($singleEditUser);
+
 
     ?>
       <section class="login-section">
         <div class="container flex">
           <h1>Edit <?= $singleEditUser['firstname'] . " " . $singleEditUser['lastname'] ?></h1>
           <form action="../includes/controller.php" method="POST" class="form">
+            <input type="hidden" name="editUserId" value="<?= $singleEditUser['employee_id'] ?>">
             <div class="form-control">
               <label for="fname">
                 <span>First name:</span>
@@ -40,17 +45,22 @@
               </label>
             </div>
             <div class="form-control">
-              <label for="fname">
+              <label for="editPositionsId">
                 <span>Position ( <?= $singleEditUser['position_name']?>):</span>
 
-                <select name="editPositions">
+                <select name="editPositionsId" id="editPositionsId">
+                  <option value="<?= $singleEditUser['position_id'] ?>" selected="selected"><?= $singleEditUser['position_name'] ?></option>
                   <?php if($singleEditUser['position_name'] !== "Administrator"): ?>
-                    <option value="<?= $singleEditUser['position_name'] ?>" selected="selected"><?= $singleEditUser['position_name'] ?></option>
                     <?php foreach($positionsArr as $position): ?>
+                      <?php
+                        if($singleEditUser['position_name'] === $position['position_name']) {
+                          continue;
+                        }
+                      ?>
                       <option value="<?= $position['position_id'] ?>"><?= $position['position_name']; ?></option>
                     <?php endforeach; ?>
                   <?php else: ?>
-                    <option value="<?= $singleEditUser['position_name'] ?>"><?= $singleEditUser['position_name'] ?></option>
+                    <option value="<?= $singleEditUser['position_id'] ?>"><?= $singleEditUser['position_name'] ?></option>
                   <?php endif; ?>
                 </select>
               </label>
@@ -86,6 +96,8 @@
 
 
     include_once("../includes/partials/footer.php");
+  } else if (isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
+    header("Location: ./employees.php");
   } else {
     header("Location: ../index.php");
   }

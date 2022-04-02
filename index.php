@@ -1,5 +1,4 @@
 <?php
-//  require_once("./includes/controller.php");
 
 
   // Page
@@ -8,7 +7,6 @@
 
   include_once("./autoloader.php");
   $loginController = new \Controllers\LoginController();
-//  var_dump($loginController->getErrorData());
 //  session_start();
   $errorMessages = [];
   if(isset($_SESSION['login_errors'])) {
@@ -43,8 +41,10 @@
         <div class="form-control">
           <label for="email">
             <span>Enter email:</span>
-            <input type="email" name="email" id="email">
+            <input type="text" name="email" id="email">
             <span><?= $errorMessages['emailNotFoundError'] ?? ""; ?></span>
+            <span><?= $errorMessages['invalidEmail'] ?? ""; ?></span>
+
             <span><?= $errorMessages['emptyEmailError'] ?? ""; ?></span>
 
           </label>
