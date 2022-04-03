@@ -8,7 +8,6 @@
   class Position
   {
     public array $positions = [];
-    public string $activeFilterPosition = "all";
 
     public function getAllPositionsData(): array
     {
@@ -27,7 +26,12 @@
       return $this->positions;
     }
 
-    public function getPositionNameById(int $positionId)
+    /**
+     * Get position name using id
+     * @param int $positionId
+     * @return string
+     */
+    protected function getPositionNameByIdData(int $positionId): string
     {
       $sql = "SELECT position_name FROM position
                     WHERE id=:position_id;";
@@ -43,13 +47,4 @@
       }
     }
 
-    public function setActiveFilterPosition(string $positionName)
-    {
-      $this->activeFilterPosition = $positionName;
-    }
-
-    public function getActiveFilterPosition(): string
-    {
-      return $this->activeFilterPosition;
-    }
   }

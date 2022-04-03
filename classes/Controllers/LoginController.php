@@ -14,6 +14,11 @@
     protected array $errorData = [];
 
 
+    /**
+     * Helper getter function that passes email and password verifys user login info
+     * @param $email
+     * @param $password
+     */
     public function getLoggedUser($email, $password)
     {
 //        $this->login($email, $password);
@@ -28,15 +33,13 @@
 
     }
 
-    public function checkValidEmail(string $email): bool
-    {
-      if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-//        $this->setLoginErrorData("invalidEmail", "Invalid email");
-        return false;
-      }
-      return true;
-    }
 
+
+    /**
+     * Function creates session for loggin
+     * @param $user_id
+     * @param $user_role
+     */
     public function createSession($user_id, $user_role)
     {
       if(!isset($_SESSION))
@@ -48,6 +51,9 @@
       $_SESSION['role'] = $user_role;
     }
 
+    /**
+     * Error login session
+     */
     public function setSessionLoginError()
     {
       $errors = $this->getErrorData();
@@ -63,16 +69,46 @@
       return $this->loginData;
     }
 
+    /**
+     * Email validator
+     * @param string $email
+     * @return bool
+     */
+    public function checkValidEmail(string $email): bool
+    {
+      if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//        $this->setLoginErrorData("invalidEmail", "Invalid email");
+        return false;
+      }
+      return true;
+    }
+
+    /**
+     * Getter function that chacks if email exists in employees table
+     * @param string $email
+     * @return bool
+     */
+
     public function checkEmailExists(string $email): bool
     {
       return $this->checkUserDataEmailExists($email);
     }
 
+    /**
+     * Checker function that runs model function and returns bool on validity of password
+     * @param string $email
+     * @param string $password
+     * @return bool
+     */
     public function checkValidPassword(string $email, string $password): bool
     {
       return $this->checkUserValidPassword($email, $password);
     }
 
+    /**
+     * Getter of error property
+     * @return array
+     */
     public function getErrorData(): array
     {
       return $this->errorData;

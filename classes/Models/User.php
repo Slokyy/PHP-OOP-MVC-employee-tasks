@@ -153,10 +153,10 @@
 
     /**
      * Getter method for getting array of logged user data
-     * @param $user_id
+     * @param int $user_id
      * @return array
      */
-    protected function getLoggedUserData($user_id): array
+    protected function getLoggedUserData(int $user_id): array
     {
       try {
         $sql = "SELECT e.email as email, e.firstname as firstname, e.lastname as lastname, p.position_name as position_name FROM employees e
@@ -180,10 +180,10 @@
 
     /**
      * PDO SELECT query that gets single user by ID
-     * @param $user_id
+     * @param int $user_id
      * @return array
      */
-    protected function getSingleUserByIdData($user_id): array
+    protected function getSingleUserByIdData(int $user_id): array
     {
       try {
         $sql = "SELECT p.id as position_id, p.position_name as position_name, e.id as employee_id, e.firstname as firstname, e.lastname as lastname, e.salary as salary, e.email as email
@@ -246,7 +246,11 @@
       }
     }
 
-    protected function getAverageSalaryData()
+    /**
+     * Get average salary
+     * @return array
+     */
+    protected function getAverageSalaryData(): array
     {
       $result = 0;
       try {
@@ -257,26 +261,36 @@
           $result = $statement->fetch();
         }
       } catch (\PDOException $e) {
-        return $e->getMessage();
+        return ["Get Average salary error" => $e->getMessage()];
       }
 
       return $result;
     }
 
-    protected function getNumberOfEmplyeesPerPositionData()
+
+    /**
+     * Get distinct number of employees per position
+     * @return array
+     */
+    protected function getNumberOfEmplyeesPerPositionData(): array
     {
-      $sql = "SELECT p.position_name as position_name, count(DISTINCT e.id) as distinct_position
+      try {
+        $sql = "SELECT p.position_name as position_name, count(DISTINCT e.id) as distinct_position
                 FROM employees e
                 left join position p on p.id = e.position_id
                 GROUP BY position_name;";
-      $statement = Database::connect()->prepare($sql);
-      $statement->execute();
-      if($statement->rowCount() > 0) {
-        $results = $statement->fetchAll();
-        return $results;
-      } else {
-        return "nothing found";
+        $statement = Database::connect()->prepare($sql);
+        $statement->execute();
+        if($statement->rowCount() > 0) {
+          $results = $statement->fetchAll();
+          return $results;
+        } else {
+          return ["getNumberOfEmplyeesPerPositionData ERROR!"];
+        }
+      } catch (\PDOException $e) {
+        return ["Pdo Error" => $e->getMessage()];
       }
+
     }
 
 
@@ -284,7 +298,6 @@
      * Get number of employees
      * @return string|int
      */
-
     protected function getTotalNumberOfEmployees(): string| int
     {
       try {

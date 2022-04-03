@@ -21,18 +21,31 @@
       $this->distinctEmployeePositions = $this->userController->getGroupedEmployeeData();
     }
 
-    public function getTotalNumberOfEmployees()
+    /**
+     * Getter method that gets number of employees from UserController (User Model)
+     * @return int
+     */
+    public function getTotalNumberOfEmployees(): int
     {
       return $this->totalNumberOfEmployees;
     }
 
+    /**
+     * Getter method that gets average salary of employees from UserController (User Model)
+     * @return float
+     */
     public function getAvgSalary(): float
     {
       $this->averageSalary = number_format($this->averageSalary, 2, ".", "");
       return $this->averageSalary;
     }
 
-    public function getGroupedEmployees() {
+    /**
+     * Getter method that gets counted number of employees per position from UserController (User Model)
+     * @return array
+     */
+    public function getGroupedEmployees(): array
+    {
       return $this->distinctEmployeePositions;
     }
 

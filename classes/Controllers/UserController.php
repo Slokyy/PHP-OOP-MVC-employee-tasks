@@ -25,11 +25,13 @@
       }
     }
 
-    public function getNumberOfEmployees() {
+    public function getNumberOfEmployees(): int | string
+    {
       return $this->getTotalNumberOfEmployees();
     }
 
-    public function getAverageSalary() {
+    public function getAverageSalary()
+    {
       return $this->getAverageSalaryData();
     }
 

@@ -91,10 +91,8 @@
     $userId = (int) checkData($_POST['editUserId']);
     $editFirstName = checkData($_POST['fname']);
     $editLastName = checkData($_POST['lname']);
-//    var_dump((int) checkData($_POST['editPositionsId']));
     $editPositionsId = (int) checkData($_POST['editPositionsId']);
     $editSalary = (float) checkData($_POST['editSalary']);
-    // @TODO: Make email validation
     $editEmail = checkData($_POST['editEmail']);
 
     $updateResult = $userController->editUserControllerData($userId, $editPositionsId, $editFirstName, $editLastName, $editSalary, $editEmail);
@@ -141,6 +139,11 @@
   }
 
 
+/**
+ * Helper function that cleans input data
+ * @param $data
+ * @return string
+ */
   function checkData($data) {
     $data = trim($data);
     $data = stripslashes($data);
