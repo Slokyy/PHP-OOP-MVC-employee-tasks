@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 01, 2022 at 01:54 PM
+-- Generation Time: Apr 03, 2022 at 04:58 PM
 -- Server version: 5.7.31
 -- PHP Version: 8.1.3
 
@@ -38,8 +38,9 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`,`lastname`),
+  UNIQUE KEY `email` (`email`),
   KEY `employees_position` (`position_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `employees`
@@ -50,7 +51,14 @@ INSERT INTO `employees` (`id`, `position_id`, `firstname`, `lastname`, `password
 (2, 3, 'Maria', 'Smith', NULL, 1340, 'mariasmith@macrohard.com'),
 (3, 4, 'Alex', 'Williams', NULL, 1500, 'alexwilliams@marcrohard.com'),
 (4, 2, 'Molly', 'Jones', NULL, 1700, 'mollyjones@macrohard.com'),
-(5, 2, 'Derek', 'Brownsworth', NULL, 1650, 'derekbrownsworth@macrohard.com');
+(5, 2, 'Derek', 'Brownsworth', NULL, 1650, 'derekbrownsworth@macrohard.com'),
+(6, 2, 'Linus', 'Lafreigne', NULL, 1750, 'linuslafreigne@macrohard.com'),
+(7, 2, 'Slobodan', 'Cvetkovic', NULL, 1523.23, 'slobodancv@macrohard.com'),
+(11, 2, 'Marko', 'Markovic', NULL, 1842, 'marko@macrohard.com'),
+(13, 4, 'Nikola', 'Nikolic', NULL, 1745, 'nikola@macrohard.com'),
+(16, 2, 'Martin', 'Medic', NULL, 1234, 'martinmedic@macrohard.com'),
+(18, 3, 'Alexandra', 'Costarica', NULL, 1678.55, 'alexandracostarica@macrohard.com'),
+(19, 4, 'Danniel', 'Wallowich', NULL, 2100, 'danielwallowich@macrohard.com');
 
 -- --------------------------------------------------------
 
