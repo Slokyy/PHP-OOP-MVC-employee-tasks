@@ -99,6 +99,7 @@
                 echo "<span class='input-error'> ";
                 echo (isset($createUserErrorMessages['invalidEmailEmpty'])) ?  $createUserErrorMessages['invalidEmailEmpty'] : "";
                 echo (isset($createUserErrorMessages['invalidEmail'])) ?  $createUserErrorMessages['invalidEmail']."<br>" : "";
+                echo (isset($createUserErrorMessages['invalidEmailExists'])) ?  $createUserErrorMessages['invalidEmailExists']."<br>" : "";
 
                 echo "</span>"
               ?>

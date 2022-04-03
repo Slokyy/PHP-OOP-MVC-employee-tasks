@@ -149,6 +149,8 @@
     }
 
 
+
+
     /**
      * Getter method for getting array of logged user data
      * @param $user_id
@@ -242,6 +244,58 @@
         $results = ["There are no users $filterPosition"];
         return $results;
       }
+    }
+
+    protected function getAverageSalaryData()
+    {
+      $result = 0;
+      try {
+        $sql = "SELECT AVG(salary) as prosecna_plata FROM employees;";
+        $statement = Database::connect()->prepare($sql);
+        $statement->execute();
+        if($statement->rowCount() > 0) {
+          $result = $statement->fetch();
+        }
+      } catch (\PDOException $e) {
+        return $e->getMessage();
+      }
+
+      return $result;
+    }
+
+    protected function getNumberOfEmplyeesPerPositionData()
+    {
+      $sql = "SELECT p.position_name as position_name, count(DISTINCT e.id) as distinct_position
+                FROM employees e
+                left join position p on p.id = e.position_id
+                GROUP BY position_name;";
+      $statement = Database::connect()->prepare($sql);
+      $statement->execute();
+      if($statement->rowCount() > 0) {
+        $results = $statement->fetchAll();
+        return $results;
+      } else {
+        return "nothing found";
+      }
+    }
+
+
+    /**
+     * Get number of employees
+     * @return string|int
+     */
+
+    protected function getTotalNumberOfEmployees(): string| int
+    {
+      try {
+        $sql = "SELECT count(DISTINCT id) as number_of_employees FROM employees;";
+        $statement = Database::connect()->prepare($sql);
+        $statement->execute();
+        if($statement->rowCount() > 0) return $statement->fetch()['number_of_employees'];
+      } catch (\PDOException $e) {
+        return "getTotalNumberOfEmployees Error: ". $e->getMessage();
+      }
+      return "ok";
     }
 
 

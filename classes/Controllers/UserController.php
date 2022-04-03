@@ -25,6 +25,19 @@
       }
     }
 
+    public function getNumberOfEmployees() {
+      return $this->getTotalNumberOfEmployees();
+    }
+
+    public function getAverageSalary() {
+      return $this->getAverageSalaryData();
+    }
+
+    public function getGroupedEmployeeData()
+    {
+      return $this->getNumberOfEmplyeesPerPositionData();
+    }
+
     public function getSingleUserById($user_id): array
     {
       return $this->getSingleUserByIdData($user_id);
@@ -57,7 +70,7 @@
         $this->setCreateUserErrorData("invalidEmail", "Please enter a valid email");
       }
 
-      if(!empty($createEmail) && !$this->checkUserDataEmailExists($createEmail)) {
+      if(!empty($createEmail) && $this->checkUserDataEmailExists($createEmail)) {
         $this->setCreateUserErrorData("invalidEmailExists", "This email exists");
       }
 
