@@ -26,7 +26,6 @@
       $createUserErrorMessages = $_SESSION['create_user_errors'];
       unset($_SESSION['create_user_errors']);
     }
-    var_dump($createUserErrorMessages);
     ?>
     <section class="login-section">
       <div class="container flex">

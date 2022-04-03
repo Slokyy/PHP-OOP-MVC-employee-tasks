@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `employees`
 --
 
+
 DROP TABLE IF EXISTS `employees`;
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -40,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
   UNIQUE KEY `id` (`id`,`lastname`),
   UNIQUE KEY `email` (`email`),
   KEY `employees_position` (`position_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `employees`
