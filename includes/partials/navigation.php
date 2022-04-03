@@ -12,7 +12,7 @@
 
 ?>
 <nav class="navbar">
-  <div class="container flex">
+  <div class="nav-container flex justify-cont-between">
     <div class="nav-group">
       <a href="./dashboard.php">Dashboard</a>
       <a href="./employees.php">Employees</a>

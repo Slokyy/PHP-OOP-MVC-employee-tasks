@@ -38,6 +38,7 @@ html {
 
 html,
 body {
+  min-height: 100vh;
   padding: 0;
   margin: 0;
   font-family: "Open Sans", sans-serif;
@@ -98,6 +99,13 @@ input {
 }
 
 .container {
+  position: relative;
+  margin: 0 auto;
+  width: 90vw;
+  /*height: 100;*/
+}
+
+.nav-container {
   margin: 0 auto;
   width: 90vw;
 }
@@ -130,6 +138,7 @@ input {
 .navbar {
   background-color: #2f2f2f;
   padding: 20px 0;
+  margin-bottom: 20px;
 }
 
 .navbar .container {
@@ -233,21 +242,22 @@ input {
 }
 
 
-.employees-table {
+.table {
   border-collapse: collapse;
   width: 100%;
+  margin-bottom: 20px;
 }
 
-.employees-table td, .employees-table th {
+.table td, .table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-.employees-table tr:nth-child(even){background-color: #f2f2f2;}
+.table tr:nth-child(even){background-color: #f2f2f2;}
 
-.employees-table tr:hover {background-color: #ddd;}
+.table tr:hover {background-color: #ddd;}
 
-.employees-table th {
+.table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
@@ -269,4 +279,37 @@ input {
 
 span.input-error {
   color: red;
+}
+
+.dashboard-info {
+  width: 100%;
+  justify-content: left;
+  margin: 20px 0;
+  line-height: 1.2em;
+}
+
+.info-group {
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 10px 5px;
+  width: 250px;
+  border-radius: 6px;
+}
+
+.dashboard-table {
+  width: 500px;
+}
+
+
+
+.footer {
+  /*position: fixed;*/
+  margin-top: 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #4e4e4e;
+  color: #fff;
+  padding: 30px;
+  width: 100%;
 }

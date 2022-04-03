@@ -8,22 +8,26 @@
     include_once("../includes/partials/header.php");
     include_once("../includes/partials/navigation.php");
 
-
-
     $dashboardController = new \Controllers\DashboardController();
     $numberOfEmployees = $dashboardController->getTotalNumberOfEmployees();
     $averageSalary = $dashboardController->getAvgSalary();
     $numberOfEmployeesPerRole = $dashboardController->getGroupedEmployees();
 
-
     ?>
-    <div class="container flex flex-center flex-column ">
+    <div class="container flex flex-column ">
 
-      <?= "Total Number of employees: ". $numberOfEmployees; ?>
-      <br>
-      <?= "Average Salary: $averageSalary"; ?>
-      <hr>
-      <table class="employees-table">
+      <div class="dashboard-info flex flex-column">
+
+        <div class="info-group">
+          <?= "Total Number of employees: ". $numberOfEmployees; ?>
+        </div>
+        <div class="info-group">
+          <?= "Average Salary: $averageSalary"; ?>
+        </div>
+      </div>
+
+
+      <table class="table dashboard-table">
         <thead>
           <tr>
             <th>Role</th>
@@ -39,9 +43,6 @@
           <?php endforeach; ?>
         </tbody>
       </table>
-
-
-
 
     </div>
     <?php

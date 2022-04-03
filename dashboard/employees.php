@@ -59,7 +59,7 @@
 
 
 
-      <table class="employees-table">
+      <table class="table">
         <thead>
           <tr>
             <th>First Name</th>
