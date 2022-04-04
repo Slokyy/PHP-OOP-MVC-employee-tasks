@@ -19,58 +19,7 @@
   $userController = new UserController();
 
   if(isset($_POST['login'])) {
-    if(isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-
-      $email = checkData($_POST['email']);
-      $password = checkData($_POST['password']);
-//    $userLogData->checkEmailExists($email);
-      if($userLogData->checkValidEmail($email)) {
-        if($userLogData->checkEmailExists($email) && $userLogData->checkValidPassword($email, $password)) {
-          echo "Test";
-          echo "Uspeh:";
-          $userLogData->getLoggedUser($email, $password);
-//        var_dump($result);
-        } else if (!$userLogData->checkEmailExists($email)) {
-          $userLogData->setLoginErrorData("emailNotFoundError", "Searched email is not found");
-          $userLogData->setSessionLoginError();
-          header("Location: ../index.php");
-
-        } else {
-          $userLogData->setLoginErrorData("passwordError", "Wrong Password!");
-
-          $userLogData->setSessionLoginError();
-          var_dump($_SESSION);
-          header("Location: ../index.php");
-        }
-      } else {
-        $userLogData->setLoginErrorData("invalidEmail", "Invalid email");
-//        session_start();
-        $userLogData->setSessionLoginError();
-        var_dump($_SESSION['login_errors'], $email);
-        header("Location: ../index.php");
-      }
-
-    } else if (empty($_POST['email']) && empty($_POST['password'])) {
-      $userLogData->setLoginErrorData("emailPasswordErr", "Triggered Karen");
-      $userLogData->setLoginErrorData("emptyEmailError", "Empty email error");
-      $userLogData->setLoginErrorData("emptyPasswordError", "Empty password error");
-
-      $userLogData->setSessionLoginError();
-
-      header("Location: ../index.php");
-    } else if (empty($_POST['email']) ) {
-      $userLogData->setLoginErrorData("emptyEmailError", "Empty email error");
-
-      $userLogData->setSessionLoginError();
-
-      header("Location: ../index.php");
-    } else if (empty($_POST['password'])) {
-      $userLogData->setLoginErrorData("emptyPasswordError", "Empty password error");
-
-      $userLogData->setSessionLoginError();
-
-      header("Location: ../index.php");
-    }
+    $userLogData->handleLogin();
   }
 
   if(isset($_POST['positionFilter'])) {
@@ -130,7 +79,7 @@
     if(!is_float($createSalary) || !is_numeric($createSalary) || $userController->validateIfInputIsString($_POST['createSalary'])) {
       // bugcheck, more like sanity check
       $salaryType = gettype(checkData($_POST['createSalary']));
-      $userController->setCreateUserErrorData("invalidSalaryType", "Please enter a numeric value");
+      $userController->setCreateUserErrorData("invalidSalaryType", "Please enter a numeric value, $salaryType given");
     }
 
     $userController->createUser($createFirstName, $createLastName, $createPositionsId, $createEmail, $createSalary);

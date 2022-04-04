@@ -15,6 +15,65 @@
 
 
     /**
+     * login test
+     * @test Testing user login
+     */
+    public function handleLogin() {
+      if(isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+
+        $email = checkData($_POST['email']);
+        $password = checkData($_POST['password']);
+//    $userLogData->checkEmailExists($email);
+        if($this->checkValidEmail($email)) {
+          if($this->checkEmailExists($email) && $this->checkValidPassword($email, $password)) {
+            echo "Test";
+            echo "Uspeh:";
+            $this->getLoggedUser($email, $password);
+//        var_dump($result);
+          } else if (!$this->checkEmailExists($email)) {
+            $this->setLoginErrorData("emailNotFoundError", "Searched email is not found");
+            $this->setSessionLoginError();
+            header("Location: ../index.php");
+
+          } else {
+            $this->setLoginErrorData("passwordError", "Wrong Password!");
+
+            $this->setSessionLoginError();
+            var_dump($_SESSION);
+            header("Location: ../index.php");
+          }
+        } else {
+          $this->setLoginErrorData("invalidEmail", "Invalid email");
+//        session_start();
+          $this->setSessionLoginError();
+          var_dump($_SESSION['login_errors'], $email);
+          header("Location: ../index.php");
+        }
+
+      } else if (empty($_POST['email']) && empty($_POST['password'])) {
+        $this->setLoginErrorData("emailPasswordErr", "Triggered Karen");
+        $this->setLoginErrorData("emptyEmailError", "Empty email error");
+        $this->setLoginErrorData("emptyPasswordError", "Empty password error");
+
+        $this->setSessionLoginError();
+
+        header("Location: ../index.php");
+      } else if (empty($_POST['email']) ) {
+        $this->setLoginErrorData("emptyEmailError", "Empty email error");
+
+        $this->setSessionLoginError();
+
+        header("Location: ../index.php");
+      } else if (empty($_POST['password'])) {
+        $this->setLoginErrorData("emptyPasswordError", "Empty password error");
+
+        $this->setSessionLoginError();
+
+        header("Location: ../index.php");
+      }
+    }
+
+    /**
      * Helper getter function that passes email and password verifys user login info
      * @param $email
      * @param $password
