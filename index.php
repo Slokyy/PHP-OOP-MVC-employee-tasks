@@ -42,10 +42,10 @@
           <label for="email">
             <span>Enter email:</span>
             <input type="text" name="email" id="email">
-            <span><?= $errorMessages['emailNotFoundError'] ?? ""; ?></span>
-            <span><?= $errorMessages['invalidEmail'] ?? ""; ?></span>
+            <span class="input-error"><?= $errorMessages['emailNotFoundError'] ?? ""; ?></span>
+            <span class="input-error"><?= $errorMessages['invalidEmail'] ?? ""; ?></span>
 
-            <span><?= $errorMessages['emptyEmailError'] ?? ""; ?></span>
+            <span class="input-error"><?= $errorMessages['emptyEmailError'] ?? ""; ?></span>
 
           </label>
         </div>
@@ -53,8 +53,8 @@
           <label for="password">
             <span>Enter password:</span>
             <input type="password" name="password" id="password">
-            <span><?= $errorMessages['passwordError'] ?? ""; ?></span>
-            <span><?= $errorMessages['emptyPasswordError'] ?? ""; ?></span>
+            <span class="input-error"><?= $errorMessages['passwordError'] ?? ""; ?></span>
+            <span class="input-error"><?= $errorMessages['emptyPasswordError'] ?? ""; ?></span>
 
           </label>
         </div>

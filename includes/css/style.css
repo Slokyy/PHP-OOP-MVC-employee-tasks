@@ -286,6 +286,7 @@ input {
 
 span.input-error {
   color: red;
+  opacity: 0.7;
 }
 
 .dashboard-info {
@@ -312,7 +313,6 @@ span.input-error {
 .footer {
   /*position: fixed;*/
   margin-top: auto;
-
   background-color: #4e4e4e;
   color: #fff;
   padding: 30px;
