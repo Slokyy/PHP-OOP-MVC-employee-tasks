@@ -1,6 +1,6 @@
 <footer class="footer flex flex-column flex-center">
-  <div>MacroHard</div>
-  <div>&copy; 2022</div>
+  <div>Opposite of MicroSoft, so we are just better</div>
+  <div>Copyright &copy; 2022 MicroHard</div>
 </footer>
 </body>
 </html>
