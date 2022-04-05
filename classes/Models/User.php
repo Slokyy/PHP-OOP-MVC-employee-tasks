@@ -299,7 +299,7 @@
      * Get number of employees
      * @return string|int
      */
-    protected function getTotalNumberOfEmployees(): string| int
+    protected function getTotalNumberOfEmployeesData(): string| int
     {
       try {
         $sql = "SELECT count(DISTINCT id) as number_of_employees FROM employees;";

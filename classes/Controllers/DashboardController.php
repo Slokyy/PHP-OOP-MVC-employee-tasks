@@ -6,20 +6,21 @@
   use Models\User;
   use Models\Position;
 
-  class DashboardController
+  class DashboardController extends User
   {
-    private int $totalNumberOfEmployees;
-    private float $averageSalary;
-    private array $distinctEmployeePositions;
-    private \Controllers\UserController $userController;
+    public int $totalNumberOfEmployees;
+    public float $averageSalary;
+    public array $distinctEmployeePositions;
+
 
     public function __construct()
     {
-      $this->userController = new UserController();
-      $this->totalNumberOfEmployees = $this->userController->getNumberOfEmployees();
-      $this->averageSalary = $this->userController->getAverageSalary()['prosecna_plata'];
-      $this->distinctEmployeePositions = $this->userController->getGroupedEmployeeData();
+      $this->totalNumberOfEmployees = $this->setNumberOfEmployees();
+      $this->averageSalary = $this->setAverageSalary()['prosecna_plata'];
+      $this->distinctEmployeePositions = $this->setGroupedEmployeeData();
     }
+
+
 
 
     /**
@@ -50,4 +51,19 @@
       return $this->distinctEmployeePositions;
     }
 
+
+    public function setNumberOfEmployees(): int | string
+    {
+      return $this->getTotalNumberOfEmployeesData();
+    }
+
+    public function setAverageSalary(): array
+    {
+      return $this->getAverageSalaryData();
+    }
+
+    public function setGroupedEmployeeData(): array
+    {
+      return $this->getNumberOfEmplyeesPerPositionData();
+    }
   }

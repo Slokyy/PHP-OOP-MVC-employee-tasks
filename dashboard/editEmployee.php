@@ -20,7 +20,7 @@
     include_once("../includes/partials/navigation.php");
 
     $positionsController = new \Controllers\PositionController();
-    $userController = new \Controllers\UserController();
+    $userController = new \Controllers\UserController($loggedUserId);
     $singleEditUser = $userController->getSingleUserById($targetEmployeeId);
     $positionsArr = $positionsController->getAllPositions();
 //    var_dump($singleEditUser);

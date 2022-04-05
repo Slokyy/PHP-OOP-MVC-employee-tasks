@@ -3,13 +3,15 @@
 
   use Database\Database;
   use Controllers\UserController;
-  $userData = new UserController();
-  $userDataArr = $userData->getLoggedUserInfo($_SESSION['user_id']);
-  $employeeName = $userDataArr['firstname'];
-  $employeeLastName = $userDataArr['lastname'];
-  $employeeEmail = $userDataArr['email'];
-  $employeeRole = $userDataArr['position_name'];
-  var_dump($userDataArr);
+  $loggedUserId = $_SESSION['user_id'];
+  $loggedUser = new UserController($loggedUserId);
+  $userDataArr = $loggedUser->getUserDataArr();
+
+  $employeeName = $loggedUser->getUserName();
+  $employeeLastName = $loggedUser->getUserLastName();
+  $employeeEmail = $loggedUser->getUserEmail();
+  $employeeRole = $loggedUser->getUserRole();
+//  var_dump($userDataArr)
 
 ?>
 <nav class="navbar">

@@ -1,6 +1,8 @@
 <?php
 
-  session_start();
+  if(!isset($_SESSION)) {
+    session_start();
+  }
 
 //  include_once("../includes/controller.php");
 //  require_once("../autoloader.php");
@@ -18,14 +20,18 @@
     include_once("../includes/partials/navigation.php");
 
     $positionsController = new \Controllers\PositionController();
-    $userController = new \Controllers\UserController();
+
+    $userController = new \Controllers\UserController($loggedUserId);
+//    var_dump($userController);
     $filterValue = "all";
+//    echo "test";
     if(isset($_SESSION['filterVal'])) {
       $filterValue = $_SESSION['filterVal'];
       if($filterValue !== "all") {
         $filterValue = $positionsController->getPositionNameById($filterValue);
       }
     }
+
 
     $updateResult = "";
     if(isset($_SESSION['update_result'])) {

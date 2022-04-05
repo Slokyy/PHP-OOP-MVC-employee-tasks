@@ -4,6 +4,8 @@
     session_start();
   }
 
+
+
 //  include_once("../includes/controller.php");
 //  require_once("../autoloader.php");
   /*
@@ -25,6 +27,7 @@
     $positionsArr = $positionsController->getAllPositions();
 
     $createUserErrorMessages = [];
+
     if(isset($_SESSION['create_user_errors'])) {
       $createUserErrorMessages = $_SESSION['create_user_errors'];
       unset($_SESSION['create_user_errors']);

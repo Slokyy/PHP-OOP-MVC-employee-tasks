@@ -3,15 +3,21 @@
   session_start();
 //  require_once("../autoloader.php");
 
+
   if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
     $title = "Dashboard";
     include_once("../includes/partials/header.php");
     include_once("../includes/partials/navigation.php");
-
     $dashboardController = new \Controllers\DashboardController();
+//    var_dump($dashboardController);
     $numberOfEmployees = $dashboardController->getTotalNumberOfEmployees();
+    $dashboardController->setAverageSalary();
+    $dashboardController->setGroupedEmployeeData();
+    $dashboardController->setNumberOfEmployees();
     $averageSalary = $dashboardController->getAvgSalary();
     $numberOfEmployeesPerRole = $dashboardController->getGroupedEmployees();
+
+
 
     ?>
     <div class="container flex flex-column ">
@@ -22,7 +28,7 @@
           <?= "Total Number of employees: ". $numberOfEmployees; ?>
         </div>
         <div class="info-group">
-          <?= "Average Salary: $averageSalary"; ?>
+          <?= "Average Salary: $averageSalary$"; ?>
         </div>
       </div>
 

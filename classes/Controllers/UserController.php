@@ -11,7 +11,16 @@
     public string $userLastName;
     public string $userEmail;
     public array $userDataArr;
-    protected array $createErrorData = [];
+    public static array $createErrorData = [];
+
+    public function __construct(int $userId = 0)
+    {
+      $this->setUserDataArr($this->getLoggedUserData($userId));
+      $this->userName = $this->getUserDataArr()['firstname'];
+      $this->userLastName = $this->getUserDataArr()['lastname'];
+      $this->userEmail = $this->getUserDataArr()['email'];
+      $this->userRole = $this->getUserDataArr()['position_name'];
+    }
 
     /**
      * @return string
@@ -83,18 +92,11 @@
       $this->userDataArr = $userData;
     }
 
-
-    public function getLoggedUserInfo($user_id): array
+    public function getUserDataArr()
     {
-//      $this->setUserDataArr($this->getLoggedUserData($user_id));
-      return $this->getLoggedUserData($user_id);
+      return $this->userDataArr;
     }
 
-/*    public function getLoggedUserInfo($user_id): array
-    {
-//      $this->setUserDataArr($this->getLoggedUserData($user_id));
-      return $this->getLoggedUserData($user_id);
-    }*/
 
     public function getUsersByFilteredData($filter): array {
       if($filter === "all") {
@@ -104,20 +106,7 @@
       }
     }
 
-    public function getNumberOfEmployees(): int | string
-    {
-      return $this->getTotalNumberOfEmployees();
-    }
 
-    public function getAverageSalary(): array
-    {
-      return $this->getAverageSalaryData();
-    }
-
-    public function getGroupedEmployeeData(): array
-    {
-      return $this->getNumberOfEmplyeesPerPositionData();
-    }
 
     public function getSingleUserById($user_id): array
     {
@@ -125,72 +114,74 @@
     }
 
     // $_POST['fname'], $_POST['lname'], $_POST['editPositionsId'], $_POST['editSalary'], $_POST['editEmail']
-    public function editUserControllerData(int $editUserId, int $editPositionsId, string $firstName, string $lastName, float $editSalary, string $editEmail): bool
+    public static function editUserControllerData(int $editUserId, int $editPositionsId, string $firstName, string $lastName, float $editSalary, string $editEmail): bool
     {
-      return $this->editUserData( $editUserId, $editPositionsId, $firstName, $lastName, $editSalary, $editEmail);
+      return (new parent)->editUserData( $editUserId, $editPositionsId, $firstName, $lastName, $editSalary, $editEmail);
 
     }
 
-    public function setUpdateSession(string $message)
+    public static function setUpdateSession(string $message)
     {
       $_SESSION['update_result'] = $message;
     }
 
-    public function deleteUser(int $userId) {
-      if($this->deleteUserData($userId)) {
+    public static function deleteUser(int $userId) {
+      if((new parent)->deleteUserData($userId)) {
         header("Location: ../dashboard/employees.php");
       }
 
     }
 
-    public function createUser(string $createFirstName, string $createLastName, int $createPositionsId, string $createEmail,float $createSalary)
+    public static function createUser(string $createFirstName, string $createLastName, int $createPositionsId, string $createEmail,float $createSalary)
     {
 
       // Email error
-      if (!empty($createEmail) && !$this->validateEmail($createEmail)) {
-        $this->setCreateUserErrorData("invalidEmail", "Please enter a valid email");
+      if (!empty($createEmail) && !self::validateEmail($createEmail)) {
+        self::setCreateUserErrorData("invalidEmail", "Please enter a valid email");
       }
 
-      if(!empty($createEmail) && $this->checkUserDataEmailExists($createEmail)) {
-        $this->setCreateUserErrorData("invalidEmailExists", "This email exists");
+      if(!empty($createEmail) && (new parent)->checkUserDataEmailExists($createEmail)) {
+        self::setCreateUserErrorData("invalidEmailExists", "This email exists");
       }
 
       // Firstname error
-      if (!empty($createFirstName) && !$this->validateIfInputIsString($createFirstName)) {
-        $this->setCreateUserErrorData("invalidFirstName", "Name must contain only letters");
+      if (!empty($createFirstName) && !self::validateIfInputIsString($createFirstName)) {
+        self::setCreateUserErrorData("invalidFirstName", "Name must contain only letters");
       }
-      if (!empty($createFirstName) && $this->validateIfStringHasMultipleWords($createFirstName)) {
-        $this->setCreateUserErrorData("invalidFirstNameMulti", "Name has multiple words");
+      if (!empty($createFirstName) && self::validateIfStringHasMultipleWords($createFirstName)) {
+        self::setCreateUserErrorData("invalidFirstNameMulti", "Name has multiple words");
       }
-      if (!empty($createFirstName) && !$this->validateIfStringIsUppercase($createFirstName)) {
-        $this->setCreateUserErrorData("invalidFirstNameCapital", "Name must be capitalised");
+      if (!empty($createFirstName) && !self::validateIfStringIsUppercase($createFirstName)) {
+        self::setCreateUserErrorData("invalidFirstNameCapital", "Name must be capitalised");
       }
 
       if (!empty($createFirstName) && strlen($createFirstName) < 5) {
-        $this->setCreateUserErrorData('invalidFirstNameLength', "Name must contain more than 5 characters");
+        self::setCreateUserErrorData('invalidFirstNameLength', "Name must contain more than 5 characters");
       }
 
       // Lastname error
-      if (!empty($createLastName) && !$this->validateIfInputIsString($createLastName)) {
-        $this->setCreateUserErrorData("invalidLastName", "Last name must contain only letters");
+      if (!empty($createLastName) && !self::validateIfInputIsString($createLastName)) {
+        self::setCreateUserErrorData("invalidLastName", "Last name must contain only letters");
       }
 
-      if (!empty($createLastName) && !$this->validateIfStringIsUppercase($createLastName)) {
-        $this->setCreateUserErrorData("invalidLastNameCapital", "Last name must be capitalised");
+      if (!empty($createLastName) && !self::validateIfStringIsUppercase($createLastName)) {
+        self::setCreateUserErrorData("invalidLastNameCapital", "Last name must be capitalised");
       }
 
       if (!empty($createLastName) && strlen($createLastName) < 5) {
-        $this->setCreateUserErrorData('invalidLastNameLength', "Last name must contain more than 5 characters");
+        self::setCreateUserErrorData('invalidLastNameLength', "Last name must contain more than 5 characters");
       }
 
 
-      var_dump($this->getCreateUserErrorData());
 
-      if(!empty($this->getCreateUserErrorData())) {
-        $this->setSessionCreateUserError();
+
+      if(!empty(self::getCreateUserErrorData())) {
+        self::setSessionCreateUserError();
+        var_dump($_SESSION['create_user_errors']);
+
         header("Location: ../dashboard/createEmployee.php");
       } else {
-        $this->createUserData($createFirstName, $createLastName, $createPositionsId, $createSalary, $createEmail);
+        (new parent)->createUserData($createFirstName, $createLastName, $createPositionsId, $createSalary, $createEmail);
         header("Location: ../dashboard/employees.php");
       }
 
@@ -199,25 +190,27 @@
 
     // Create User Error functions
 
-    public function setCreateUserErrorData(string $targetKey,string $targetValue)
+    public static function setCreateUserErrorData(string $targetKey,string $targetValue)
     {
-      $this->createErrorData[$targetKey] = $targetValue;
+      self::$createErrorData[$targetKey] = $targetValue;
     }
 
-    public function getCreateUserErrorData(): array
+    public static function getCreateUserErrorData(): array
     {
-      return $this->createErrorData;
+      return self::$createErrorData;
     }
 
-    public function setSessionCreateUserError()
+    public static function setSessionCreateUserError()
     {
-      $errors = $this->getCreateUserErrorData();
-      $_SESSION['create_user_errors'] = $errors;
+      session_start();
+
+//      var_dump($errors);
+      $_SESSION['create_user_errors'] = self::getCreateUserErrorData();
     }
 
     // Helper validation functions
 
-    public function validateEmail(string $email): bool
+    public static function validateEmail(string $email): bool
     {
       if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return false;
@@ -225,7 +218,7 @@
       return true;
     }
 
-    public function validateIfInputIsString(string $checkString): bool
+    public static function validateIfInputIsString(string $checkString): bool
     {
       if(!preg_match("/^[a-z]+$/i", $checkString)) {
         return false;
@@ -233,7 +226,7 @@
       return true;
     }
 
-    public function validateIfStringIsUppercase(string $checkString): bool
+    public static function validateIfStringIsUppercase(string $checkString): bool
     {
       if(!preg_match('~^\p{Lu}~u', $checkString)) {
         return false;
@@ -241,7 +234,7 @@
       return true;
     }
 
-    public function validateIfStringHasMultipleWords(string $checkString): bool
+    public static function validateIfStringHasMultipleWords(string $checkString): bool
     {
       if (!preg_match("/^[^ ].* .*[^ ]$/", $checkString))
       {

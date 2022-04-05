@@ -15,7 +15,7 @@
 
 
 //  var_dump($_POST['login'], $_POST['email'], $_POST['password']);
-  $userController = new UserController();
+//  $userController = new UserController();
 
   if(isset($_POST['login'])) {
     $email = checkData($_POST['email']);
@@ -25,16 +25,20 @@
   }
 
   if(isset($_POST['positionFilter'])) {
-    $getEmployeesByRole =  $_POST['positions'];
+    $getEmployeesByRole = $_POST['positions'];
+    session_start();
 
     $_SESSION['filterVal'] = $getEmployeesByRole;
     unset($_POST['positionFilter']);
+    var_dump($_SESSION['filterVal']);
+
     header("Location: ../dashboard/employees.php");
   }
 
   if(isset($_POST['deleteEmployee']) && $_SERVER["REQUEST_METHOD"] == "POST") {
     $employeeId = (int)$_POST['targetEmployeeId'];
-    $userController->deleteUser($employeeId);
+    // @TODO: Convert to static Call
+    UserController::deleteUser($employeeId);
   }
 
   if(isset($_POST['editUser'])) {
@@ -46,11 +50,12 @@
     $editSalary = (float) checkData($_POST['editSalary']);
     $editEmail = checkData($_POST['editEmail']);
 
-    $updateResult = $userController->editUserControllerData($userId, $editPositionsId, $editFirstName, $editLastName, $editSalary, $editEmail);
+    $updateResult = UserController::editUserControllerData($userId, $editPositionsId, $editFirstName, $editLastName, $editSalary, $editEmail);
     if($updateResult) {
-      $userController->setUpdateSession("Sucesfully updated $editFirstName $editLastName");
+      // @TODO: Convert to static Call
+      UserController::setUpdateSession("Sucesfully updated $editFirstName $editLastName");
     } else {
-      $userController->setUpdateSession("Error updating $editFirstName $editLastName");
+      UserController::setUpdateSession("Error updating $editFirstName $editLastName");
     }
     header("Location: ../dashboard/employees.php");
   }
@@ -65,26 +70,32 @@
     $createEmail = checkData($_POST['createEmail']);
 
     if(empty($createFirstName)) {
-      $userController->setCreateUserErrorData("invalidNameEmpty", "Please fill name field");
+      // @TODO: Convert to static call
+      UserController::setCreateUserErrorData("invalidNameEmpty", "Please fill name field");
     }
     if(empty($createLastName)) {
-      $userController->setCreateUserErrorData("invalidLastEmpty", "Please fill last name field");
+      // @TODO: Convert to static call
+      UserController::setCreateUserErrorData("invalidLastEmpty", "Please fill last name field");
     }
     // Otherwise its converted and returns false
     if(empty($_POST['createSalary'])) {
-      $userController->setCreateUserErrorData("invalidSalaryEmpty", "Please fill salary field");
+      // @TODO: Convert to static call
+      UserController::setCreateUserErrorData("invalidSalaryEmpty", "Please fill salary field");
     }
     if(empty($createEmail)) {
-      $userController->setCreateUserErrorData("invalidEmailEmpty", "Please fill email field");
+      // @TODO: Convert to static call
+      UserController::setCreateUserErrorData("invalidEmailEmpty", "Please fill email field");
     }
 
-    if(!is_float($createSalary) || !is_numeric($createSalary) || $userController->validateIfInputIsString($_POST['createSalary'])) {
+    // @TODO: Convert to static call
+    if(!is_float($createSalary) || !is_numeric($createSalary) || UserController::validateIfInputIsString($_POST['createSalary'])) {
       // bugcheck, more like sanity check
       $salaryType = gettype(checkData($_POST['createSalary']));
-      $userController->setCreateUserErrorData("invalidSalaryType", "Please enter a numeric value, $salaryType given");
+      UserController::setCreateUserErrorData("invalidSalaryType", "Please enter a numeric value, $salaryType given");
     }
-
-    $userController->createUser($createFirstName, $createLastName, $createPositionsId, $createEmail, $createSalary);
+//    var_dump(UserController::getCreateUserErrorData());
+    // @TODO: Convert to static call
+    UserController::createUser($createFirstName, $createLastName, $createPositionsId, $createEmail, $createSalary);
 //    var_dump($result);
 //    var_dump($userController->getCreateUserErrorData());
   }
