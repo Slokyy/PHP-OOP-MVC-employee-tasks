@@ -9,6 +9,7 @@
   $employeeLastName = $userDataArr['lastname'];
   $employeeEmail = $userDataArr['email'];
   $employeeRole = $userDataArr['position_name'];
+  var_dump($userDataArr);
 
 ?>
 <nav class="navbar">

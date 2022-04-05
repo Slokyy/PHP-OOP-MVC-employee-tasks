@@ -14,13 +14,13 @@
      * login function sets array property of login data,
      * and returns bool value if it finds user
      * @TODO Convert login function to boolean
-     * @param $email
-     * @param $password
+     * @param string $email
+     * @param string $password
      * @return bool
      */
-    public function login($email, $password): bool
+    public function login(string $email, string $password): bool
     {
-      $password = md5($password);
+//      $password = md5($password);
       try {
         $db = Database::connect();
         $sql = "SELECT p.position_name as position_name, e.id as employee_id, e.firstname as firstname, e.lastname as lastname, e.salary as salary, e.email as email
@@ -168,7 +168,7 @@
         $statement->execute();
 
         if($statement->rowCount() > 0) {
-          $results = $statement->fetchAll();
+          $results = $statement->fetch();
           return $results;
         } else {
           return ["Triggered Karen at the getLoggedUserEmail class"];
@@ -344,7 +344,7 @@
      */
     protected function checkUserValidPassword(string $email,string $password): bool
     {
-      $password = md5($password);
+//      $password = md5($password);
       $sql = "SELECT email FROM employees WHERE email= :email AND password=:password";
       $statement = Database::connect()->prepare($sql);
       $statement->bindParam(":email", $email, \PDO::PARAM_STR);

@@ -10,7 +10,56 @@
 
   class LoginController extends User
   {
+    private string $loginEmail;
+    private string $loginPassword;
+    protected string $loginUserId;
+    protected string $loginUserRole;
     protected array $errorData = [];
+
+    public function __construct($email, $password) {
+      $this->loginEmail = $email;
+      $this->loginPassword = md5($password);
+    }
+
+    public function setLoginUserId(int $loginUserId) {
+      $this->loginUserId = $loginUserId;
+    }
+
+    public function getLoginUserId(): int
+    {
+      return $this->loginUserId;
+    }
+
+    public function setLoginuserRole(string $loginUserRole)
+    {
+      $this->loginUserRole = $loginUserRole;
+    }
+
+    public function getLoginUserRole(): string
+    {
+      return $this->loginUserRole;
+    }
+
+    public function setLoginEmail(string $email)
+    {
+      $this->loginEmail = $email;
+    }
+
+    public function getLoginEmail(): string
+    {
+      return $this->loginEmail;
+    }
+
+    public function setLoginPassword(string $password)
+    {
+      $this->loginPassword = $password;
+    }
+
+    public function getLoginPassword(): string
+    {
+      return $this->loginPassword;
+    }
+
 
 
     /**
@@ -20,16 +69,15 @@
     public function handleLogin() {
       if(isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
-        $email = checkData($_POST['email']);
-        $password = checkData($_POST['password']);
-//    $userLogData->checkEmailExists($email);
-        if($this->checkValidEmail($email)) {
-          if($this->checkEmailExists($email) && $this->checkValidPassword($email, $password)) {
-            echo "Test";
+        if($this->checkValidEmail()) {
+          if($this->checkEmailExists() && $this->checkValidPassword()) {
+
             echo "Uspeh:";
-            $this->getLoggedUser($email, $password);
-//        var_dump($result);
-          } else if (!$this->checkEmailExists($email)) {
+
+
+            var_dump($this->loginEmail, $this->loginPassword);
+            $this->getLoggedUser();
+          } else if (!$this->checkEmailExists()) {
             $this->setLoginErrorData("emailNotFoundError", "Searched email is not found");
             $this->setSessionLoginError();
             header("Location: ../index.php");
@@ -45,19 +93,19 @@
           $this->setLoginErrorData("invalidEmail", "Invalid email");
 //        session_start();
           $this->setSessionLoginError();
-          var_dump($_SESSION['login_errors'], $email);
-          header("Location: ../index.php");
+          var_dump($_SESSION['login_errors'], $this->loginEmail);
+//          header("Location: ../index.php");
         }
 
       } else if (empty($_POST['email']) && empty($_POST['password'])) {
-        $this->setLoginErrorData("emailPasswordErr", "Triggered Karen");
+        $this->setLoginErrorData("emailPasswordErr", "Empty form");
         $this->setLoginErrorData("emptyEmailError", "Empty email error");
         $this->setLoginErrorData("emptyPasswordError", "Empty password error");
 
         $this->setSessionLoginError();
 
         header("Location: ../index.php");
-      } else if (empty($_POST['email']) ) {
+      } else if (empty($_POST['email'])) {
         $this->setLoginErrorData("emptyEmailError", "Empty email error");
 
         $this->setSessionLoginError();
@@ -70,22 +118,23 @@
 
         header("Location: ../index.php");
       }
+      var_dump($this->getErrorData());
     }
 
     /**
      * Helper getter function that passes email and password verifys user login info
-     * @param $email
-     * @param $password
      */
-    public function getLoggedUser($email, $password)
+    public function getLoggedUser()
     {
-//        $this->login($email, $password);
-      if($this->login($email, $password)) {
-        $loginData = $this->getLoginData();
-        $this->createSession($loginData['user_id'], $loginData['user_role']);
+      if($this->login($this->loginEmail, $this->loginPassword)) {
+        echo "true";
+        $this->setLoginUserId($this->getLoginData()['user_id']);
+        $this->setLoginUserRole($this->getLogindata()['user_role']);
+        $this->createSession();
         header("Location: ../dashboard/dashboard.php");
       } else {
         $this->setLoginErrorData("emailPasswordErr", 'Email/Password error!');
+        echo "test";
         header("Location: ../index.php");
       }
 
@@ -95,18 +144,16 @@
 
     /**
      * Function creates session for loggin
-     * @param $user_id
-     * @param $user_role
      */
-    public function createSession($user_id, $user_role)
+    public function createSession()
     {
       if(!isset($_SESSION))
       {
         session_start();
       }
 
-      $_SESSION['user_id'] = $user_id;
-      $_SESSION['role'] = $user_role;
+      $_SESSION['user_id'] = $this->getLoginUserId();
+      $_SESSION['role'] = $this->getLoginUserRole();
     }
 
     /**
@@ -114,6 +161,10 @@
      */
     public function setSessionLoginError()
     {
+      if(!isset($_SESSION))
+      {
+        session_start();
+      }
       $errors = $this->getErrorData();
       $_SESSION['login_errors'] = $errors;
     }
@@ -129,13 +180,12 @@
 
     /**
      * Email validator
-     * @param string $email
      * @return bool
      */
-    public function checkValidEmail(string $email): bool
+    public function checkValidEmail(): bool
     {
-      if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-//        $this->setLoginErrorData("invalidEmail", "Invalid email");
+      if(!filter_var($this->getLoginEmail(), FILTER_VALIDATE_EMAIL)) {
+        $this->setLoginErrorData("invalidEmail", "Invalid email");
         return false;
       }
       return true;
@@ -143,24 +193,21 @@
 
     /**
      * Getter function that chacks if email exists in employees table
-     * @param string $email
      * @return bool
      */
 
-    public function checkEmailExists(string $email): bool
+    public function checkEmailExists(): bool
     {
-      return $this->checkUserDataEmailExists($email);
+      return $this->checkUserDataEmailExists($this->getLoginEmail());
     }
 
     /**
      * Checker function that runs model function and returns bool on validity of password
-     * @param string $email
-     * @param string $password
      * @return bool
      */
-    public function checkValidPassword(string $email, string $password): bool
+    public function checkValidPassword(): bool
     {
-      return $this->checkUserValidPassword($email, $password);
+      return $this->checkUserValidPassword($this->getLoginEmail(), $this->getLoginPassword());
     }
 
     /**
@@ -172,7 +219,9 @@
       return $this->errorData;
     }
 
+
     /**
+     * setting Error Data
      * @param string $targetKey
      * @param string $targetValue
      */

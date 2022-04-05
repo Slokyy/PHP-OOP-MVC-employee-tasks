@@ -6,15 +6,95 @@
 
   class UserController extends User
   {
-
+    public string $userRole;
+    public string $userName;
+    public string $userLastName;
+    public string $userEmail;
+    public array $userDataArr;
     protected array $createErrorData = [];
+
+    /**
+     * @return string
+     */
+    public function getUserRole(): string
+    {
+      return $this->userRole;
+    }
+
+    /**
+     * @param string $userRole
+     */
+    public function setUserRole(string $userRole): void
+    {
+      $this->userRole = $userRole;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserName(): string
+    {
+      return $this->userName;
+    }
+
+    /**
+     * @param string $userName
+     */
+    public function setUserName(string $userName): void
+    {
+      $this->userName = $userName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserLastName(): string
+    {
+      return $this->userLastName;
+    }
+
+    /**
+     * @param string $userLastName
+     */
+    public function setUserLastName(string $userLastName): void
+    {
+      $this->userLastName = $userLastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserEmail(): string
+    {
+      return $this->userEmail;
+    }
+
+    /**
+     * @param string $userEmail
+     */
+    public function setUserEmail(string $userEmail): void
+    {
+      $this->userEmail = $userEmail;
+    }
+
+
+
+    public function setUserDataArr(array $userData) {
+      $this->userDataArr = $userData;
+    }
 
 
     public function getLoggedUserInfo($user_id): array
     {
-      return $this->getLoggedUserData($user_id)[0];
+//      $this->setUserDataArr($this->getLoggedUserData($user_id));
+      return $this->getLoggedUserData($user_id);
     }
 
+/*    public function getLoggedUserInfo($user_id): array
+    {
+//      $this->setUserDataArr($this->getLoggedUserData($user_id));
+      return $this->getLoggedUserData($user_id);
+    }*/
 
     public function getUsersByFilteredData($filter): array {
       if($filter === "all") {

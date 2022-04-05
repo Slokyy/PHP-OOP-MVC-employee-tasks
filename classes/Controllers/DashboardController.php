@@ -21,6 +21,7 @@
       $this->distinctEmployeePositions = $this->userController->getGroupedEmployeeData();
     }
 
+
     /**
      * Getter method that gets number of employees from UserController (User Model)
      * @return int

@@ -6,8 +6,11 @@
   include_once("./includes/partials/header.php");
 
   include_once("./autoloader.php");
-  $loginController = new \Controllers\LoginController();
-//  session_start();
+//  $loginController = new \Controllers\LoginController();
+  if(!isset($_SESSION['login_errors'])) {
+    session_start();
+  }
+
   $errorMessages = [];
   if(isset($_SESSION['login_errors'])) {
     $errorMessages = $_SESSION['login_errors'];
@@ -25,7 +28,10 @@
 
 
 
-  session_destroy();
+  if(isset($_SESSION['login_errors'])) {
+    session_destroy();
+  }
+
 
 
 

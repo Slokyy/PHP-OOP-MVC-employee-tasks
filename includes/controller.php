@@ -15,10 +15,12 @@
 
 
 //  var_dump($_POST['login'], $_POST['email'], $_POST['password']);
-  $userLogData = new LoginController();
   $userController = new UserController();
 
   if(isset($_POST['login'])) {
+    $email = checkData($_POST['email']);
+    $password = checkData($_POST['password']);
+    $userLogData = new LoginController($email, $password);
     $userLogData->handleLogin();
   }
 
