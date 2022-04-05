@@ -9,6 +9,10 @@
   {
     public array $positions = [];
 
+    /**
+     * Get all positions
+     * @return array
+     */
     public function getAllPositionsData(): array
     {
 
@@ -41,7 +45,6 @@
       if($statement->rowCount() > 0) {
         $result = $statement->fetch();
         return $result['position_name'];
-        // $this->setActiveFilterPosition($result['position_name']);
       } else {
         return "Some getPositionNameById Error";
       }

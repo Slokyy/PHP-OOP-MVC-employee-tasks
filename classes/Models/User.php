@@ -7,6 +7,7 @@
 
   class User
   {
+    protected array $loginData = [];
 
 
     /**

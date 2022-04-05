@@ -10,7 +10,6 @@
 
   class LoginController extends User
   {
-    protected array $loginData = [];
     protected array $errorData = [];
 
 

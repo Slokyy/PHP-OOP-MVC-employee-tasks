@@ -10,6 +10,9 @@
     include_once("../classes/Database/Database.php");
     include_once("../classes/Models/User.php");*/
 
+  if (!isset($_SESSION['user_id']) && $_SESSION['role'] !== "Administrator") {
+    header("Location: ../index.php");
+  }
 
 
   if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
@@ -118,13 +121,8 @@
     </section>
 
     <?php
-//  require_once("../includes/controller.php");
-
-
-
     include_once("../includes/partials/footer.php");
-  } else if (isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
-    header("Location: ./employees.php");
+//    isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator"
   } else {
     header("Location: ../index.php");
   }

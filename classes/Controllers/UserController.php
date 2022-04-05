@@ -12,8 +12,7 @@
 
     public function getLoggedUserInfo($user_id): array
     {
-      $loggedUserData =  $this->getLoggedUserData($user_id)[0];
-      return $loggedUserData;
+      return $this->getLoggedUserData($user_id)[0];
     }
 
 
@@ -30,12 +29,12 @@
       return $this->getTotalNumberOfEmployees();
     }
 
-    public function getAverageSalary()
+    public function getAverageSalary(): array
     {
       return $this->getAverageSalaryData();
     }
 
-    public function getGroupedEmployeeData()
+    public function getGroupedEmployeeData(): array
     {
       return $this->getNumberOfEmplyeesPerPositionData();
     }
