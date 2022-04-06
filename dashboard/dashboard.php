@@ -1,15 +1,14 @@
 <?php
 
-  session_start();
-//  require_once("../autoloader.php");
-
+  if(!isset($_SESSION)) {
+    session_start();
+  }
 
   if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
     $title = "Dashboard";
     include_once("../includes/partials/header.php");
     include_once("../includes/partials/navigation.php");
     $dashboardController = new \Controllers\DashboardController();
-//    var_dump($dashboardController);
     $numberOfEmployees = $dashboardController->getTotalNumberOfEmployees();
     $dashboardController->setAverageSalary();
     $dashboardController->setGroupedEmployeeData();

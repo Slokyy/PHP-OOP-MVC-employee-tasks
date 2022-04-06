@@ -5,17 +5,9 @@
   }
 
 
-
-//  include_once("../includes/controller.php");
-//  require_once("../autoloader.php");
-  /*
-    include_once("../classes/Database/Database.php");
-    include_once("../classes/Models/User.php");*/
-
   if (!isset($_SESSION['user_id']) && $_SESSION['role'] !== "Administrator") {
     header("Location: ../index.php");
   }
-
 
   if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
     $title = "Add Employee";
@@ -25,7 +17,6 @@
 
     $positionsController = new \Controllers\PositionController();
     $positionsArr = $positionsController->getAllPositions();
-
     $createUserErrorMessages = [];
 
     if(isset($_SESSION['create_user_errors'])) {
@@ -48,7 +39,6 @@
                 echo (isset($createUserErrorMessages['invalidFirstNameMulti'])) ?  $createUserErrorMessages['invalidFirstNameMulti']."<br>" : "";
                 echo (isset($createUserErrorMessages['invalidFirstNameCapital'])) ?  $createUserErrorMessages['invalidFirstNameCapital']."<br>" : "";
                 echo (isset($createUserErrorMessages['invalidFirstNameLength'])) ?  $createUserErrorMessages['invalidFirstNameLength']."<br>" : "";
-
                 echo "</span>"
               ?>
             </label>
@@ -62,8 +52,6 @@
                 echo (isset($createUserErrorMessages['invalidLastEmpty'])) ?  $createUserErrorMessages['invalidLastEmpty'] : "";
                 echo (isset($createUserErrorMessages['invalidLastName'])) ?  $createUserErrorMessages['invalidLastName']."<br>" : "";
                 echo (isset($createUserErrorMessages['invalidLastNameCapital'])) ?  $createUserErrorMessages['invalidLastNameCapital']."<br>" : "";
-                echo (isset($createUserErrorMessages['invalidLastNameLength'])) ?  $createUserErrorMessages['invalidLastNameLength']."<br>" : "";
-
                 echo "</span>"
               ?>
             </label>
@@ -91,7 +79,6 @@
                 echo "<span class='input-error'> ";
                 echo (isset($createUserErrorMessages['invalidSalaryEmpty'])) ?  $createUserErrorMessages['invalidSalaryEmpty'] : "";
                 echo (isset($createUserErrorMessages['invalidSalaryType'])) ?  $createUserErrorMessages['invalidSalaryType']."<br>" : "";
-
                 echo "</span>"
               ?>
             </label>
@@ -105,27 +92,17 @@
                 echo (isset($createUserErrorMessages['invalidEmailEmpty'])) ?  $createUserErrorMessages['invalidEmailEmpty'] : "";
                 echo (isset($createUserErrorMessages['invalidEmail'])) ?  $createUserErrorMessages['invalidEmail']."<br>" : "";
                 echo (isset($createUserErrorMessages['invalidEmailExists'])) ?  $createUserErrorMessages['invalidEmailExists']."<br>" : "";
-
                 echo "</span>"
               ?>
             </label>
           </div>
 
           <button type="submit" class="btn btn-submit"  name="createUser">Add new Employee</button>
-          <?php
-            //              var_dump($singleEditUser);
-          ?>
         </form>
-
-
-
-
       </div>
     </section>
-
     <?php
     include_once("../includes/partials/footer.php");
-//    isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator"
   } else {
     header("Location: ../index.php");
   }

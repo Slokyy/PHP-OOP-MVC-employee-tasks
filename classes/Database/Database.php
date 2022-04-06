@@ -9,18 +9,27 @@
     private static string $pwd = "";
     private static string $dbName = "backend_zaposleni";
     private static string $error;
+    private static \PDO $pdoObj;
 
-    public static function connect(): \PDO | string
+
+    public static function connect(): \PDO
+    {
+      self::setPdo();
+      return self::$pdoObj;
+    }
+
+
+    private static function setPdo(): bool
     {
       $dsn = "mysql:host=" . self::$host . ";dbname=" . self::$dbName . ";";
       try {
         $pdo = new \PDO($dsn, self::$user, self::$pwd);
         $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-        return $pdo;
+        self::$pdoObj = $pdo;
+        return true;
       } catch(\PDOException $e) {
         self::$error = $e->getMessage();
-        return self::$error;
       }
-
+      return false;
     }
   }

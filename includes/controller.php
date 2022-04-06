@@ -11,7 +11,9 @@
   use Models\Position;
   use Controllers\LoginController;
   use Controllers\UserController;
+  use Controllers\TaskController;
   use Controllers\PositionController;
+  use Controllers\ProjectController;
 
 
 //  var_dump($_POST['login'], $_POST['email'], $_POST['password']);
@@ -98,6 +100,27 @@
     UserController::createUser($createFirstName, $createLastName, $createPositionsId, $createEmail, $createSalary);
 //    var_dump($result);
 //    var_dump($userController->getCreateUserErrorData());
+  }
+
+  if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['createProject'])) {
+    $projectName = !empty($_POST['projectName']) ? checkData($_POST['projectName']) : "";
+    $projectDescription = !empty($_POST['projectDescription']) ? checkData($_POST['projectDescription']) : "";
+//    var_dump(isset($_POST['projectName']), $_POST['projectDescription']);
+//    var_dump($projectName, $projectDescription);
+    ProjectController::createNewProject($projectName, $projectDescription);
+  }
+
+  if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['createTask'])) {
+    $projectId = (int) checkData($_POST['projectId']);
+    $userId = (int) checkData($_POST['userId']);
+    $taskDescription = checkData($_POST['taskDescription']);
+    $taskDeadline = checkData($_POST['taskDeadline']);
+
+    // basic control
+    if(empty($projectId) || empty($userId) || empty($taskDescription) || empty($taskDeadline)) {
+      header("Location: ../dashboard/create-task.php");
+    }
+    TaskController::createTask($projectId, $userId, $taskDescription, $taskDeadline);
   }
 
 

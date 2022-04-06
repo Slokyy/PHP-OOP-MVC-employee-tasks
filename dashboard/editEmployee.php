@@ -4,14 +4,6 @@
     session_start();
   }
 
-//  include_once("../includes/controller.php");
-//  require_once("../autoloader.php");
-  /*
-    include_once("../classes/Database/Database.php");
-    include_once("../classes/Models/User.php");*/
-
-
-
   if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator" && isset($_POST['targetEmployeeId'])) {
     $title = "Edit";
     $targetEmployeeId = $_POST['targetEmployeeId'];
@@ -23,8 +15,6 @@
     $userController = new \Controllers\UserController($loggedUserId);
     $singleEditUser = $userController->getSingleUserById($targetEmployeeId);
     $positionsArr = $positionsController->getAllPositions();
-//    var_dump($singleEditUser);
-
 
     ?>
       <section class="login-section">
@@ -79,22 +69,10 @@
             </div>
 
             <button type="submit" class="btn btn-submit"  name="editUser">Edit</button>
-            <?php
-//              var_dump($singleEditUser);
-            ?>
           </form>
-
-
-
-
         </div>
       </section>
-
     <?php
-//  require_once("../includes/controller.php");
-
-
-
     include_once("../includes/partials/footer.php");
   } else if (isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
     header("Location: ./employees.php");

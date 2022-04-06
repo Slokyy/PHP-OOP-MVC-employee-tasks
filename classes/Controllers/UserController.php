@@ -106,6 +106,15 @@
       }
     }
 
+    /**
+     * Get all user data from User model
+     * @return array
+     */
+    public static function getAllUsers(): array
+    {
+      return (new parent)->getAllUsersData();
+    }
+
 
 
     public function getSingleUserById($user_id): array
@@ -155,8 +164,8 @@
         self::setCreateUserErrorData("invalidFirstNameCapital", "Name must be capitalised");
       }
 
-      if (!empty($createFirstName) && strlen($createFirstName) < 5) {
-        self::setCreateUserErrorData('invalidFirstNameLength', "Name must contain more than 5 characters");
+      if (!empty($createFirstName) && strlen($createFirstName) < 2) {
+        self::setCreateUserErrorData('invalidFirstNameLength', "Enter a valid name (more than 2 characters)");
       }
 
       // Lastname error
@@ -168,9 +177,6 @@
         self::setCreateUserErrorData("invalidLastNameCapital", "Last name must be capitalised");
       }
 
-      if (!empty($createLastName) && strlen($createLastName) < 5) {
-        self::setCreateUserErrorData('invalidLastNameLength', "Last name must contain more than 5 characters");
-      }
 
 
 

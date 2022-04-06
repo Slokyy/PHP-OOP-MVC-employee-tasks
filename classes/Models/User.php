@@ -299,7 +299,7 @@
      * Get number of employees
      * @return string|int
      */
-    protected function getTotalNumberOfEmployeesData(): string| int
+    protected function getTotalNumberOfEmployeesData(): string
     {
       try {
         $sql = "SELECT count(DISTINCT id) as number_of_employees FROM employees;";
@@ -309,7 +309,7 @@
       } catch (\PDOException $e) {
         return "getTotalNumberOfEmployees Error: ". $e->getMessage();
       }
-      return "ok";
+      return "Ok";
     }
 
 

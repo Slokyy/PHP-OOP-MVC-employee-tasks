@@ -4,14 +4,6 @@
     session_start();
   }
 
-//  include_once("../includes/controller.php");
-//  require_once("../autoloader.php");
-/*
-  include_once("../classes/Database/Database.php");
-  include_once("../classes/Models/User.php");*/
-
-
-
   if(isset($_SESSION['user_id']) && $_SESSION['role'] === "Administrator") {
     $title = "Employees";
 
@@ -22,9 +14,7 @@
     $positionsController = new \Controllers\PositionController();
 
     $userController = new \Controllers\UserController($loggedUserId);
-//    var_dump($userController);
     $filterValue = "all";
-//    echo "test";
     if(isset($_SESSION['filterVal'])) {
       $filterValue = $_SESSION['filterVal'];
       if($filterValue !== "all") {
@@ -32,15 +22,12 @@
       }
     }
 
-
     $updateResult = "";
     if(isset($_SESSION['update_result'])) {
       $updateResult = $_SESSION['update_result'];
       unset($_SESSION['update_result']);
     }
 
-
-//  echo $require_test;
     $positionsArr = $positionsController->getAllPositions();
     $usersArr = $userController->getUsersByFilteredData($filterValue);
 
@@ -62,8 +49,6 @@
           <button type="submit" class="btn btn-edit add-employee">Add New Employee</button>
         </form>
       </div>
-
-
 
       <table class="table">
         <thead>
@@ -108,8 +93,6 @@
           <?php endforeach; ?>
         </tbody>
       </table>
-
-
     </div>
     <?php
     include_once("../includes/partials/footer.php");

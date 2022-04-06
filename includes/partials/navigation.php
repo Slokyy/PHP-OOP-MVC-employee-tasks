@@ -17,15 +17,24 @@
 <nav class="navbar">
   <div class="nav-container flex justify-cont-between">
     <div class="nav-group">
-      <a href="./dashboard.php">Dashboard</a>
-      <a href="./employees.php">Employees</a>
+      <a href="./dashboard.php" class="nav-link">Dashboard</a>
+      <a href="./employees.php" class="nav-link">Employees</a>
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn nav-link">Projects 🔻</a>
+        <span class="dropdown-content">
+          <a href="./create-project">📚 Create Project</a>
+          <a href="./create-task">📝 Create Task</a>
+        </span>
+
+
+      </div>
     </div>
     <div class="nav-group">
       <?php if(isset($_SESSION["user_id"])): ?>
         <span class="navlog-info">
           <?= "$employeeName $employeeLastName ( $employeeRole)" ?>
         </span>
-        <a href="../index.php">Log out</a>
+        <a href="../index.php" class="nav-link">Log out</a>
       <?php endif; ?>
 
       <?php
