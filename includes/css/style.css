@@ -352,16 +352,20 @@ span.input-error {
 
 /* Custom dynamic task colors */
 
+.text-bold-size {
+  font-size: 18px;
+}
+
 .task-good {
-  background-color: #a2ff00 !important;
+  color: #027606 !important;
 }
 
 .task-warning {
-  background-color: #f5b042 !important;
+  color: #c65216 !important;
 }
 
 .task-alert {
-  background-color: rgba(255, 0, 0, 0.62) !important;
+  color: rgb(242, 22, 22) !important;
 }
 
 

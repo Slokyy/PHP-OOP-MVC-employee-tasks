@@ -38,7 +38,7 @@
           $tasks->setFieldColor();
           $bgColor = $tasks->getFieldColor();
           ?>
-          <tr class="<?php echo empty($bgColor) ? "" : $bgColor ?>">
+          <tr class="text-bold-size <?php echo empty($bgColor) ? "" : $bgColor ?>">
 
             <td><?= $task['project_name']; ?></td>
             <td><?= $task['task_description']; ?></td>
