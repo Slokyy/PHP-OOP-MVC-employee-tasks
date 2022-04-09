@@ -22,6 +22,7 @@
       <div class="dropdown">
         <a href="javascript:void(0)" class="dropbtn nav-link">Projects 🔻</a>
         <span class="dropdown-content">
+          <a href="./all-tasks.php">💰 All Tasks</a>
           <a href="./create-project">📚 Create Project</a>
           <a href="./create-task">📝 Create Task</a>
         </span>

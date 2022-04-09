@@ -14,6 +14,9 @@
     private string $fieldColorClass;
     private string $taskDeadline;
 
+    /**
+     * Constructing Task class with timezone, alltasks and current time
+     */
     public function __construct()
     {
       date_default_timezone_set('Europe/Belgrade');
@@ -21,11 +24,19 @@
       $this->currentTime = strtotime(date("Y-m-d", time()));
     }
 
-    public function getCurrentTimestamp()
+    /**
+     * Getter for the current time
+     * @return int
+     */
+    public function getCurrentTimestamp(): int
     {
       return $this->currentTime;
     }
 
+    /**
+     * Getter method that gets all tasks
+     * @return array
+     */
     public function getAllTasks(): array
     {
       return $this->allTasks;
@@ -36,12 +47,20 @@
       $this->dayDiff = $timestampDiff / 86400;
     }
 
-    public function getDayDifference()
+    /**
+     * Getter for day difference
+     * @return int
+     */
+    public function getDayDifference(): int
     {
       return $this->dayDiff;
     }
 
-    public function setFieldColor()
+    /**
+     * Setter method for field color
+     * @return void
+     */
+    public function setFieldColor(): void
     {
       if($this->getDayDifference() > 4 && $this->getDayDifference() <= 10) {
         $this->fieldColorClass = "task-good";
@@ -56,13 +75,14 @@
       }
     }
 
-    public function getFieldColor()
+    /**
+     * Getter for color class
+     * @return string
+     */
+    public function getFieldColor(): string
     {
       return $this->fieldColorClass;
     }
-
-
-
 
     /**
      * Create task method
@@ -70,8 +90,9 @@
      * @param int $userId
      * @param string $taskDescription
      * @param string $taskDeadline
+     * @return void
      */
-    public static function createTask(int $projectId, int $userId, string $taskDescription, string $taskDeadline)
+    public static function createTask(int $projectId, int $userId, string $taskDescription, string $taskDeadline): void
     {
       $result = (new parent)->createTaskData($projectId, $userId, $taskDescription, $taskDeadline);
       var_dump($result);

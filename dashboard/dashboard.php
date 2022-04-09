@@ -10,9 +10,6 @@
     include_once("../includes/partials/navigation.php");
     $dashboardController = new \Controllers\DashboardController();
     $numberOfEmployees = $dashboardController->getTotalNumberOfEmployees();
-    $dashboardController->setAverageSalary();
-    $dashboardController->setGroupedEmployeeData();
-    $dashboardController->setNumberOfEmployees();
     $averageSalary = $dashboardController->getAvgSalary();
     $numberOfEmployeesPerRole = $dashboardController->getGroupedEmployees();
 

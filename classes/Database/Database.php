@@ -11,7 +11,10 @@
     private static string $error;
     private static \PDO $pdoObj;
 
-
+    /**
+     * get pdo connect object
+     * @return \PDO
+     */
     public static function connect(): \PDO
     {
       self::setPdo();
@@ -19,6 +22,10 @@
     }
 
 
+    /**
+     * Set pdo object
+     * @return bool
+     */
     private static function setPdo(): bool
     {
       $dsn = "mysql:host=" . self::$host . ";dbname=" . self::$dbName . ";";

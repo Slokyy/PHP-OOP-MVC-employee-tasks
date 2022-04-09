@@ -9,6 +9,9 @@
 
     private array $projectsArr = [];
 
+    /**
+     * Setter for project class with array
+     */
     public function __construct()
     {
       $this->projectsArr = $this->getAllProjectData();

@@ -21,7 +21,7 @@
      * @param int $positionId
      * @return string
      */
-    public function getPositionNameById(int $positionId)
+    public function getPositionNameById(int $positionId): string
     {
       return $this->getPositionNameByIdData($positionId);
     }

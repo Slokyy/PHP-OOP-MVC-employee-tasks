@@ -16,45 +16,88 @@
     protected string $loginUserRole;
     protected array $errorData = [];
 
-    public function __construct($email, $password) {
+    /**
+     * Construct setter for login and password
+     * @param $email
+     * @param $password
+     */
+    public function __construct($email, $password)
+    {
       $this->loginEmail = $email;
       $this->loginPassword = md5($password);
     }
 
-    public function setLoginUserId(int $loginUserId) {
+    /**
+     * Setter method for logged user Id
+     * @param int $loginUserId
+     * @return void
+     */
+    public function setLoginUserId(int $loginUserId): void
+    {
       $this->loginUserId = $loginUserId;
     }
 
+    /**
+     * Getter method for logged user Id
+     * @return int
+     */
     public function getLoginUserId(): int
     {
       return $this->loginUserId;
     }
 
-    public function setLoginuserRole(string $loginUserRole)
+    /**
+     * Setter method for setting logged user Role
+     * @param string $loginUserRole
+     * @return void
+     */
+    public function setLoginuserRole(string $loginUserRole): void
     {
       $this->loginUserRole = $loginUserRole;
     }
 
+    /**
+     * Getter method that returns logged user role
+     * @return string
+     */
     public function getLoginUserRole(): string
     {
       return $this->loginUserRole;
     }
 
-    public function setLoginEmail(string $email)
+    /**
+     * Setter for logged user email
+     * @param string $email
+     * @return void
+     */
+    public function setLoginEmail(string $email): void
     {
       $this->loginEmail = $email;
     }
 
+    /**
+     * getter for logged user email
+     * @return string
+     */
     public function getLoginEmail(): string
     {
       return $this->loginEmail;
     }
 
-    public function setLoginPassword(string $password)
+    /**
+     * Setter for logged user password
+     * @param string $password
+     * @return void
+     */
+    public function setLoginPassword(string $password): void
     {
       $this->loginPassword = $password;
     }
 
+    /**
+     * Getter for login user password
+     * @return string
+     */
     public function getLoginPassword(): string
     {
       return $this->loginPassword;
@@ -63,10 +106,11 @@
 
 
     /**
-     * login test
-     * @test Testing user login
+     * Handler method for login
+     * @return void
      */
-    public function handleLogin() {
+    public function handleLogin(): void
+    {
       if(isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
 
         if($this->checkValidEmail()) {
@@ -91,10 +135,8 @@
           }
         } else {
           $this->setLoginErrorData("invalidEmail", "Invalid email");
-//        session_start();
           $this->setSessionLoginError();
           var_dump($_SESSION['login_errors'], $this->loginEmail);
-//          header("Location: ../index.php");
         }
 
       } else if (empty($_POST['email']) && empty($_POST['password'])) {
@@ -123,8 +165,9 @@
 
     /**
      * Helper getter function that passes email and password verifys user login info
+     * @return void
      */
-    public function getLoggedUser()
+    public function getLoggedUser(): void
     {
       if($this->login($this->loginEmail, $this->loginPassword)) {
         echo "true";
@@ -134,7 +177,6 @@
         header("Location: ../dashboard/dashboard.php");
       } else {
         $this->setLoginErrorData("emailPasswordErr", 'Email/Password error!');
-        echo "test";
         header("Location: ../index.php");
       }
 
@@ -144,8 +186,9 @@
 
     /**
      * Function creates session for loggin
+     * @return void
      */
-    public function createSession()
+    public function createSession(): void
     {
       if(!isset($_SESSION))
       {
@@ -158,8 +201,9 @@
 
     /**
      * Error login session
+     * @return void
      */
-    public function setSessionLoginError()
+    public function setSessionLoginError(): void
     {
       if(!isset($_SESSION))
       {
@@ -224,8 +268,9 @@
      * setting Error Data
      * @param string $targetKey
      * @param string $targetValue
+     * @return void
      */
-    public function setLoginErrorData(string $targetKey,string $targetValue)
+    public function setLoginErrorData(string $targetKey,string $targetValue): void
     {
       $this->errorData[$targetKey] = $targetValue;
     }

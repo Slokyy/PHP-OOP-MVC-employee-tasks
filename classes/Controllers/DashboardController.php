@@ -12,7 +12,9 @@
     public float $averageSalary;
     public array $distinctEmployeePositions;
 
-
+    /**
+     * Constructing method values for dashboard
+     */
     public function __construct()
     {
       $this->totalNumberOfEmployees = $this->setNumberOfEmployees();
@@ -52,16 +54,28 @@
     }
 
 
-    public function setNumberOfEmployees(): int | string
+    /**
+     * Setter method that sets number or employes from Employee table
+     * @return int
+     */
+    public function setNumberOfEmployees(): int
     {
       return $this->getTotalNumberOfEmployeesData();
     }
 
+    /**
+     * Setter method for average salary
+     * @return array
+     */
     public function setAverageSalary(): array
     {
       return $this->getAverageSalaryData();
     }
 
+    /**
+     * Setter method for grouped employee data
+     * @return array
+     */
     public function setGroupedEmployeeData(): array
     {
       return $this->getNumberOfEmplyeesPerPositionData();
