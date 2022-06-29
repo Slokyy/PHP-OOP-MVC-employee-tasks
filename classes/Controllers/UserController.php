@@ -23,6 +23,7 @@
     }
 
     /**
+     * Gets user role
      * @return string
      */
     public function getUserRole(): string
